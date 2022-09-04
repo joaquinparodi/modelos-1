@@ -1,0 +1,19 @@
+Mi primera impresión del problema es que es un problema el cual hay que hacer la
+menor cantidad de lavados juntando en prendas compatibles para sumar la menor 
+cantidad de tiempo posible (se toma el tiempo de lavado de la prenda que más tiempo
+tarde en lavarse). Parece ser un problema no complejo ya que el problema
+presenta pocas prendas, pero si hay que resolverlo con muchas prendas,
+la dificultad parece que creciera bastante al crecer la cantidad de combinaciones
+exponencialmente.
+
+Voy a resolver el problema creando un grafo cuyas aristas unen prendas incompatibles,
+por lo tanto voy a dividir el grafo en secciones que no tienen conexiones (con
+prendas compatibles entre sí).
+
+Para esto decidi juntar grupos de prendas que son todas incompatibles entre
+ellas. El siguiente paso es ir llenando la mínima cantidad de lavados con las
+prendas trantando de minimizar el costo de agregar prendas. El algoritmo recorre
+los lavados buscando el lavado que minimice el tiempo de lavado general.
+
+Para tratar de mejorar el resultado, tomé la mejor solución de las
+soluciones que surgen de los grafos completos más grandes.

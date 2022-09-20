@@ -44,7 +44,7 @@ def add_clothing_to_solution(solution: list, new_clothing: Clothing):
         index = center
         while index < len(solution) and not solution[index].can_add_clothing(new_clothing):
             index += 1
-    if not solution[index].add_clothing(new_clothing) or len(solution) <= index:
+    if index >= len(solution) or not solution[index].add_clothing(new_clothing):
         solution.append(Washing(new_clothing))
 
 def calculate_solution(solution):
@@ -113,7 +113,7 @@ for solution in solutions:
             solution.sort(key = lambda washing: washing.washing_time, reverse = True)
     
 clothings_to_add = [a for b, a in clothings_graph.items()]
-clothings_to_add.sort(key = lambda clothing: clothing.washing, reverse = True)
+clothings_to_add.sort(key = lambda clothing: clothing.washing_time, reverse = True)
 clothings_to_add.sort(key = lambda clothing: len(clothing.incompatibles), reverse = True)
 for solution in solutions:
     for clothing in clothings_to_add:

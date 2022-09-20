@@ -44,7 +44,7 @@ def add_clothing_to_solution(solution: list, new_clothing: Clothing):
         index = center
         while index < len(solution) and not solution[index].can_add_clothing(new_clothing):
             index += 1
-    if not solution[index].add_clothing(new_clothing):
+    if not solution[index].add_clothing(new_clothing) or len(solution) <= index:
         solution.append(Washing(new_clothing))
 
 def calculate_solution(solution):
@@ -54,7 +54,7 @@ def calculate_solution(solution):
     return total_washing_time
 
 # RESOLUCION
-file = open("primer_problema.txt", "r+")
+file = open("problema.txt", "r+")
 clothings_graph = {}
 for current_line in file:
     if current_line[0] == 'p':
@@ -85,12 +85,35 @@ solutions = []
 index = 0
 current_solution_size = len(all_incompatibles[index])
 best_solution_size = current_solution_size
-while current_solution_size == best_solution_size:  # se queda con los all_incompatibles que tengan la mayor cantidad de vertices
+longest_incompatibles = []
+while index < len(all_incompatibles): # se queda con los all_incompatibles que tengan la mayor cantidad de vertices
+    longest_incompatibles.append([clothing for clothing in all_incompatibles[index]])
     solutions.append([Washing(clothing) for clothing in all_incompatibles[index]])
     index += 1
-    current_solution_size = len(all_incompatibles[index])
 
+for incompatibles in all_incompatibles:
+    incompatibles.sort(key = lambda washing: washing.washing_time, reverse = True)
+    incompatibles.sort(key = lambda washing: len(washing.incompatibles), reverse = True)
+longest_incompatibles.sort(key = lambda incompatible: sum([washing.washing_time for washing in incompatible]), reverse = True)
+longest_incompatibles.sort(key = lambda incompatible: sum([len(washing.incompatibles) for washing in incompatible]), reverse = True)
+incompatibles = []
+for incompatible in longest_incompatibles:
+    incompatibles.extend(incompatible)
+to_add = []
+already_added = {}
+for incompatible in incompatibles:
+    if incompatible not in already_added:
+        already_added[incompatible] = True
+        to_add.append(incompatible)
+for solution in solutions:
+    for incompatible in to_add:
+        if all(incompatible not in washing for washing in solution):
+            add_clothing_to_solution(solution, incompatible)
+            solution.sort(key = lambda washing: len(washing.clothings), reverse = True)
+            solution.sort(key = lambda washing: washing.washing_time, reverse = True)
+    
 clothings_to_add = [a for b, a in clothings_graph.items()]
+clothings_to_add.sort(key = lambda clothing: clothing.washing, reverse = True)
 clothings_to_add.sort(key = lambda clothing: len(clothing.incompatibles), reverse = True)
 for solution in solutions:
     for clothing in clothings_to_add:

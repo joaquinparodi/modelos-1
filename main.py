@@ -25,7 +25,7 @@ class Washing:
         return True
 
     def can_add_clothing(self, new_clothing: Clothing):
-        if any(new_clothing.number in x.incompatibles for x in self.clothings):
+        if any(new_clothing.number in clothing.incompatibles for clothing in self.clothings):
             return False
         return True
 
@@ -73,12 +73,12 @@ for i in clothings_graph:   # obtengo los grafos que tengan los vertices complet
         for k in clothings_graph[j].incompatibles:
             if all(k in clothings_graph[clothing.number].incompatibles for clothing in all_incompatibles_to_add):
                 all_incompatibles_to_add.append(clothings_graph[k])
-        all_incompatibles_to_add.sort(key = lambda x: x.number)
+        all_incompatibles_to_add.sort(key = lambda washing: washing.number)
         if all(all_incompatibles_to_add != incompatibles for incompatibles in all_incompatibles):
             all_incompatibles.append(all_incompatibles_to_add)
 
 for incompatibles in all_incompatibles:
-    incompatibles.sort(key = lambda i: i.washing_time, reverse = True)  # ordeno de descendentemente por tiempo de lavado
+    incompatibles.sort(key = lambda washing: washing.washing_time, reverse = True)  # ordeno de descendentemente por tiempo de lavado
 all_incompatibles.sort(key = len, reverse = True)   # ordeno de descendentemente por cantidad de incompatibles
 
 solutions = []
@@ -91,27 +91,30 @@ while index < len(all_incompatibles): # se queda con los all_incompatibles que t
     solutions.append([Washing(clothing) for clothing in all_incompatibles[index]])
     index += 1
 
-for incompatibles in all_incompatibles:
-    incompatibles.sort(key = lambda washing: washing.washing_time, reverse = True)
-    incompatibles.sort(key = lambda washing: len(washing.incompatibles), reverse = True)
-longest_incompatibles.sort(key = lambda incompatible: sum([washing.washing_time for washing in incompatible]), reverse = True)
-longest_incompatibles.sort(key = lambda incompatible: sum([len(washing.incompatibles) for washing in incompatible]), reverse = True)
+for incompatibles in longest_incompatibles:
+    incompatibles.sort(key = lambda clothing: clothing.washing_time, reverse = True)
+    incompatibles.sort(key = lambda clothing: len(clothing.incompatibles), reverse = True)
+longest_incompatibles.sort(key = lambda incompatible: sum([clothing.washing_time for clothing in incompatible]), reverse = True)
+longest_incompatibles.sort(key = lambda incompatible: sum([len(clothing.incompatibles) for clothing in incompatible]), reverse = True)
+
 incompatibles = []
 for incompatible in longest_incompatibles:
     incompatibles.extend(incompatible)
+
 to_add = []
 already_added = {}
 for incompatible in incompatibles:
     if incompatible not in already_added:
         already_added[incompatible] = True
         to_add.append(incompatible)
+
 for solution in solutions:
     for incompatible in to_add:
         if all(incompatible not in washing for washing in solution):
             add_clothing_to_solution(solution, incompatible)
             solution.sort(key = lambda washing: len(washing.clothings), reverse = True)
             solution.sort(key = lambda washing: washing.washing_time, reverse = True)
-    
+
 clothings_to_add = [a for b, a in clothings_graph.items()]
 clothings_to_add.sort(key = lambda clothing: clothing.washing_time, reverse = True)
 clothings_to_add.sort(key = lambda clothing: len(clothing.incompatibles), reverse = True)

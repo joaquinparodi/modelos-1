@@ -65,6 +65,7 @@ for current_line in file:
         clothings_graph[int(current_line.split(' ')[1])].washing_time = int(current_line.split(' ')[2])
     elif current_line[0] == 'e':
         clothings_graph[int(current_line.split(' ')[1])].add_incompatible(clothings_graph[int(current_line.split(' ')[2])])
+        clothings_graph[int(current_line.split(' ')[2])].add_incompatible(clothings_graph[int(current_line.split(' ')[1])])
 
 all_incompatibles = []
 for i in clothings_graph:   # obtengo los grafos que tengan los vertices completamente conectados entre si (todos incompatibles entre si)

@@ -1,3 +1,5 @@
+PRIMERA ENTREGA
+
 Mi primera impresión del problema es que es un problema el cual hay que hacer la
 menor cantidad de lavados juntando en prendas compatibles para sumar la menor 
 cantidad de tiempo posible (se toma el tiempo de lavado de la prenda que más tiempo
@@ -17,3 +19,16 @@ los lavados buscando el lavado que minimice el tiempo de lavado general.
 
 Para tratar de mejorar el resultado, tomé la mejor solución de las
 soluciones que surgen de los grafos completos más grandes.
+
+
+SEGUNDA ENTREGA
+
+Este segundo problema tiene muchas más prendas, por lo tanto, la cantidad de
+combinaciones es mucho mayor (crece exponencialmente) por lo tanto, tuve que
+agregar mejoras. Una de estas es que el algoritmo se quedaba solamente
+con uno de los mejores de los conjuntos de prendas que son incompatibles entre sí.
+En esta entrega, el algoritmo usa como solución inicial todos los conjuntos de prendas
+incompatibles entre sí. Otra mejora es que ahora el algoritmo usa estos conjuntos 
+incompatibles entre sí para generar una lista de elementos a agregar, están ordenados 
+por cantidad de incompatibilidades y por el tiempo de lavado del conjunto, resultando 
+un mejor orden de entrada.

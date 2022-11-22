@@ -54,7 +54,7 @@ def calculate_solution(solution):
     return total_washing_time
 
 # RESOLUCION
-file = open("problema.txt", "r+")
+file = open("data.txt", "r+")
 clothings_graph = {}
 for current_line in file:
     if current_line[0] == 'p':

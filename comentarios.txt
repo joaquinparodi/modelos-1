@@ -32,3 +32,12 @@ incompatibles entre sí. Otra mejora es que ahora el algoritmo usa estos conjunt
 incompatibles entre sí para generar una lista de elementos a agregar, están ordenados 
 por cantidad de incompatibilidades y por el tiempo de lavado del conjunto, resultando 
 un mejor orden de entrada.
+
+
+CUARTA ENTREGA
+
+En esta cuarta entrega pasé el modelo hecho en la tercer entrega a código con la librería
+CPLEX de python. No pude llegar al resultado óptimo debido a que esta librería no
+me permite declarar más de 1000 variables y 1000 restricciones de manera gratuita.
+Me registré en la página de IBM con el mail FIUBA para poder superar los límites pero
+no encontré la manera de vincular la cuenta para poder aumentar el límite.
